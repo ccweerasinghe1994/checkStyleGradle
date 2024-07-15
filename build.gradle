@@ -82,8 +82,10 @@ tasks.register('copyPreCommitHook', Copy) {
     }
 }
 
-tasks.named('compileJava') {
-    dependsOn 'copyPreCommitHook'
+if (!System.getenv('JENKINS_URL')) {
+    tasks.named('compileJava') {
+        dependsOn 'copyPreCommitHook'
+    }
 }
 tasks.named('test') {
     useJUnitPlatform()
