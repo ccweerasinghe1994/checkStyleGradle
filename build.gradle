@@ -34,7 +34,19 @@ checkstyle {
     showViolations = true // Set to true if you want to show Checkstyle violations in the console output
 }
 
+tasks.register('copyPreCommitHook', Copy) {
+    // Define the source and destination of the copy operation
+    from 'config/checkstyle/pre-commit'
+    into '.git/hooks'
 
+    // Ensure the file is executable after being copied
+    fileMode = 0755
+}
+
+tasks.named('bootRun') {
+    // Make sure the copyPreCommitHook task runs before the application starts
+    dependsOn copyPreCommitHook
+}
 
 tasks.named('test') {
     useJUnitPlatform()
