@@ -26,13 +26,13 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-checkstyle {
-    toolVersion = "10.12.4" // Specify the Checkstyle version
-    configDirectory = file("config/checkstyle") // Directory where the Checkstyle configuration file is located
-    configFile = file("config/checkstyle/checkstyle.xml") // Path to the Checkstyle configuration file
-    ignoreFailures = false // Set to true if you want the build to continue even if there are Checkstyle violations
-    showViolations = true // Set to true if you want to show Checkstyle violations in the console output
-}
+//checkstyle {
+//    toolVersion = "10.12.4" // Specify the Checkstyle version
+//    configDirectory = file("config/checkstyle") // Directory where the Checkstyle configuration file is located
+//    configFile = file("config/checkstyle/checkstyle.xml") // Path to the Checkstyle configuration file
+//    ignoreFailures = false // Set to true if you want the build to continue even if there are Checkstyle violations
+//    showViolations = true // Set to true if you want to show Checkstyle violations in the console output
+//}
 
 /**
  * Registers a custom Gradle task named `copyPreCommitHook` of type `Copy`.
