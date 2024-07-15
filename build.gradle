@@ -34,6 +34,20 @@ checkstyle {
     showViolations = true // Set to true if you want to show Checkstyle violations in the console output
 }
 
+/**
+ * Registers a custom Gradle task named `copyPreCommitHook` of type `Copy`.
+ * This task is designed to automate the process of copying a specific `pre-commit` hook script
+ * from a designated configuration directory to the `.git/hooks` directory within the project.
+ * This ensures that the `pre-commit` hook is properly placed and made executable before the application starts,
+ * facilitating automated code quality checks or other pre-commit actions defined in the hook script.
+ *
+ * The task specifies the source file location (`from`) as 'config/checkstyle/pre-commit',
+ * indicating the relative path to the `pre-commit` script within the project structure.
+ * The destination (`into`) is set to '.git/hooks', the standard directory where Git looks for hook scripts.
+ *
+ * Additionally, the task sets the file mode (`fileMode`) of the copied script to `0755`.
+ * This file mode setting makes the script executable, allowing it to be run by Git as a hook.
+ */
 tasks.register('copyPreCommitHook', Copy) {
     // Define the source and destination of the copy operation
     from 'config/checkstyle/pre-commit'
@@ -47,7 +61,6 @@ tasks.named('bootRun') {
     // Make sure the copyPreCommitHook task runs before the application starts
     dependsOn copyPreCommitHook
 }
-
 tasks.named('test') {
     useJUnitPlatform()
 }
