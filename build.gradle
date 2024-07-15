@@ -35,18 +35,34 @@ dependencies {
 //}
 
 /**
- * Registers a custom Gradle task named `copyPreCommitHook` of type `Copy`.
- * This task is designed to automate the process of copying a specific `pre-commit` hook script
- * from a designated configuration directory to the `.git/hooks` directory within the project.
- * This ensures that the `pre-commit` hook is properly placed and made executable before the application starts,
- * facilitating automated code quality checks or other pre-commit actions defined in the hook script.
+ * Task: copyPreCommitHook
  *
- * The task specifies the source file location (`from`) as 'config/checkstyle/pre-commit',
- * indicating the relative path to the `pre-commit` script within the project structure.
- * The destination (`into`) is set to '.git/hooks', the standard directory where Git looks for hook scripts.
+ * This task automates the copying of a pre-commit hook script from a specified source directory
+ * to the `.git/hooks` directory within the project. It ensures that the pre-commit hook is properly
+ * placed and made executable, facilitating automated code quality checks or other pre-commit actions
+ * defined in the hook script.
  *
- * Additionally, the task sets the file mode (`fileMode`) of the copied script to `0755`.
- * This file mode setting makes the script executable, allowing it to be run by Git as a hook.
+ * The task is of type `Copy`, indicating it performs a file copy operation. The source of the copy
+ * operation is defined by the `from` property, and the destination is defined by the `into` property.
+ *
+ * Properties:
+ * - `from`: Specifies the relative path to the source `pre-commit` script within the project structure.
+ *           In this case, it's located at 'config/checkstyle/pre-commit'.
+ * - `into`: Specifies the destination directory for the copy operation, which is '.git/hooks', the
+ *           standard directory where Git looks for hook scripts.
+ * - `fileMode`: Sets the file mode of the copied script to `0755`, making the script executable.
+ *
+ * Behavior:
+ * Before the main copy operation, a `doFirst` action checks if the `pre-commit` file already exists
+ * in the destination directory. If the file exists, the task logs a message indicating the hook
+ * already exists and skips the main copy operation by throwing a `StopExecutionException`. This
+ * ensures the task only copies the hook if it doesn't already exist, preventing unnecessary overwrites.
+ *
+ * Usage:
+ * This task is intended to be run as part of the project setup or build process to ensure the
+ * pre-commit hook is in place before any commits are made. It can be manually executed via the
+ * command line with `./gradlew copyPreCommitHook` or automatically executed before tasks that
+ * depend on it, such as `compileJava`.
  */
 tasks.register('copyPreCommitHook', Copy) {
     // Define the source and destination of the copy operation
@@ -55,11 +71,19 @@ tasks.register('copyPreCommitHook', Copy) {
 
     // Ensure the file is executable after being copied
     fileMode = 0755
+
+    // Add a condition to only execute the copy if the pre-commit hook does not already exist
+    doFirst {
+        if (file('.git/hooks/pre-commit').exists()) {
+            logger.lifecycle("Pre-commit hook already exists. Skipping copy.")
+            // Skip the task execution
+            throw new StopExecutionException("Pre-commit hook already exists.")
+        }
+    }
 }
 
-tasks.named('bootRun') {
-    // Make sure the copyPreCommitHook task runs before the application starts
-    dependsOn copyPreCommitHook
+tasks.named('compileJava') {
+    dependsOn 'copyPreCommitHook'
 }
 tasks.named('test') {
     useJUnitPlatform()
