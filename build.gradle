@@ -81,6 +81,8 @@ tasks.register('copyPreCommitHook', Copy) {
     }
 }
 
+
+
 //if (!System.getenv('JENKINS_URL')) {
 //    tasks.named('compileJava') {
 //        dependsOn 'copyPreCommitHook'
