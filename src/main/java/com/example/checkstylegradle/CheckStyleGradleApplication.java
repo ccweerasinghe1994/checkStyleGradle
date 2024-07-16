@@ -8,7 +8,11 @@ public class CheckStyleGradleApplication {
 
     public static void main(String[] args) {
         // this is a comment
-        SpringApplication.run(CheckStyleGradleApplication.class, args);
+        SpringApplication.run(CheckStyleGradleApplication.class, args)
+
+
+
+        ;
     }
 
 }
