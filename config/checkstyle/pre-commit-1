@@ -1,0 +1,48 @@
+#!/bin/sh
+
+# get tht current branch
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+# get the remote default branch
+REMOTE_DEFAULT_BRANCH=$(git remote show origin | grep 'HEAD branch' | cut -d ':' -f 2 | xargs)
+
+# get the change files compared to the remote default branch
+
+CHANGED_FILES=$(git diff --name-only $REMOTE_DEFAULT_BRANCH)
+
+
+# Find the root directory of the git repository
+REPO_ROOT=$(git rev-parse --show-toplevel)
+
+# Construct the path to the checkstyle jar file relative to the repository root
+CHECKSTYLE_JAR="$REPO_ROOT/config/checkstyle/checkstyle-10.17.0-all.jar"
+
+# Checkstyle configuration file
+CHECKSTYLE_CONFIG="$REPO_ROOT/config/checkstyle/checkstyle.xml"
+
+# Run the checkstyle command on the changed files and save the output to
+
+java -jar "$CHECKSTYLE_JAR" -c "$CHECKSTYLE_CONFIG" $CHANGED_FILES > "$REPO_ROOT/report.txt"
+
+# # Directory or file to check
+# SRC_DIRECTORY="$REPO_ROOT/src/"
+
+# # Running Checkstyle
+# java -jar "$CHECKSTYLE_JAR" -c "$CHECKSTYLE_CONFIG" "$SRC_DIRECTORY"
+
+# Check if Checkstyle found any issues
+if [ $? -eq 0 ]; then
+    echo "Checkstyle checks passed."
+    echo "see the checkstyle violations report at $REPO_ROOT/report.txt"
+    exit 0
+else
+    echo "Checkstyle violations found. Please fix them before committing."
+    echo "see the checkstyle violations main report at $REPO_ROOT/build/reports/checkstyle/main.html"
+    echo "see the checkstyle violations test report at $REPO_ROOT/build/reports/checkstyle/test.html"
+    exit 1
+fi
+
+
+echo "Current branch is $BRANCH"
+echo "Remote default branch is $REMOTE_DEFAULT_BRANCH"
+echo "Changed files are $CHANGED_FILES"
