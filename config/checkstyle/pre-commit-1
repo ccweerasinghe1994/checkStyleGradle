@@ -49,3 +49,24 @@ else
 fi
 
 cat $REPO_ROOT/report.txt | awk 'NR==1{print "\033[1;31m" $0 "\033[0m"}; NR>1{if (NR==FNR) {print} else {print "\033[31m" $0 "\033[0m"}}'
+
+stage('Run Checkstyle') {
+    steps {
+        sh '''
+        # Your existing code here
+
+        # Save the output of the command to a variable
+        def checkstyleOutput = sh(script: "cat $REPO_ROOT/report.txt | awk 'NR==1{print \"\\033[1;31m\" \$0 \"\\033[0m\"}; NR>1{if (NR==FNR) {print} else {print \"\\033[31m\" \$0 \"\\033[0m\"}}'", returnStdout: true).trim()
+
+        // Rest of your code
+
+        echo "Current branch is $BRANCH"
+        echo "Remote default branch is $REMOTE_DEFAULT_BRANCH"
+        echo "Changed java files compare to default branch $CHANGED_FILES"
+        echo "Checkstyle exit status is $CHECKSTYLE_EXIT_STATUS"
+        echo "$CHECKSTYLE_OUTPUT"
+
+        // Rest of your code
+        '''
+    }
+}
