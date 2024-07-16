@@ -6,7 +6,7 @@ BRANCH=$(git rev-parse --abbrev-ref HEAD)
 # get the remote default branch
 # if the remote default branch is not set, it will be set to master
 # you can change the default branch to main or any other branch by changing the value of REMOTE_DEFAULT_BRANCH example: REMOTE_DEFAULT_BRANCH=your_default_branch
-REMOTE_DEFAULT_BRANCH=$(git remote show origin | grep 'HEAD branch' | cut -d ':' -f 2 | xargs)
+REMOTE_DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
 
 # get the changed files compared to the remote default branch and only the java files
 CHANGED_FILES=$(git diff --name-only $REMOTE_DEFAULT_BRANCH...$BRANCH | grep ".java$")
