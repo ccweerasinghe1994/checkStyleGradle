@@ -10,8 +10,6 @@ public class CheckStyleGradleApplication {
         // this is a comment
         SpringApplication.run(CheckStyleGradleApplication.class, args)
 
-
-
         ;
     }
 
