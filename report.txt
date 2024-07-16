@@ -1,0 +1,8 @@
+Starting audit...
+[ERROR] C:\Users\chama\OneDrive\Documents\GitHub\checkStyleGradle\src\main\java\com\example\checkstylegradle\CheckStyleGradleApplication.java:9:5: 'method def modifier' has incorrect indentation level 4, expected level should be 2. [Indentation]
+[ERROR] C:\Users\chama\OneDrive\Documents\GitHub\checkStyleGradle\src\main\java\com\example\checkstylegradle\CheckStyleGradleApplication.java:11:9: 'method def' child has incorrect indentation level 8, expected level should be 4. [Indentation]
+[ERROR] C:\Users\chama\OneDrive\Documents\GitHub\checkStyleGradle\src\main\java\com\example\checkstylegradle\CheckStyleGradleApplication.java:16:5: 'method def rcurly' has incorrect indentation level 4, expected level should be 2. [Indentation]
+[ERROR] C:\Users\chama\OneDrive\Documents\GitHub\checkStyleGradle\src\main\java\com\example\checkstylegradle\Test.java:9:5: 'method def modifier' has incorrect indentation level 4, expected level should be 2. [Indentation]
+[ERROR] C:\Users\chama\OneDrive\Documents\GitHub\checkStyleGradle\src\main\java\com\example\checkstylegradle\Test.java:11:9: 'method def' child has incorrect indentation level 8, expected level should be 4. [Indentation]
+[ERROR] C:\Users\chama\OneDrive\Documents\GitHub\checkStyleGradle\src\main\java\com\example\checkstylegradle\Test.java:16:5: 'method def rcurly' has incorrect indentation level 4, expected level should be 2. [Indentation]
+Audit done.
