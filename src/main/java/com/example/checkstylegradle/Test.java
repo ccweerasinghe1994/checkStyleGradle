@@ -4,13 +4,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CheckStyleGradleApplication {
+public class Test {
 
     public static void main(String[] args) {
         // this is a comment
-        SpringApplication.run(CheckStyleGradleApplication.class, args)
+        SpringApplication.run(Test.class, args)
 
-   
+
 
         ;
     }
