@@ -47,3 +47,5 @@ else
     echo "See the checkstyle violations test report at $REPO_ROOT/build/reports/checkstyle/test.html"
     exit 1
 fi
+
+cat $REPO_ROOT/report.txt | awk 'NR==1{print "\033[1;31m" $0 "\033[0m"}; NR>1{if (NR==FNR) {print} else {print "\033[31m" $0 "\033[0m"}}'
