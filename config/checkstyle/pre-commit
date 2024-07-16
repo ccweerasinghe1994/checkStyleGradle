@@ -23,3 +23,9 @@ else
     echo "Checkstyle violations found. Please fix them before committing."
     exit 1
 fi
+
+if [ -f "$REPO_ROOT/report.txt" ]; then
+    cat $REPO_ROOT/report.txt
+else
+    echo "No report file found."
+fi
