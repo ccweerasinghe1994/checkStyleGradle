@@ -29,3 +29,7 @@ if [ -f "$REPO_ROOT/report.txt" ]; then
 else
     echo "No report file found."
 fi
+
+
+fileContent=$(cat yourfile.txt)
+markdownContent="\`\`\`\n${fileContent}\n\`\`\`"
