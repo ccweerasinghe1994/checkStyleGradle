@@ -2,6 +2,7 @@
 output=""
 
 # Use process substitution to feed the output of the Checkstyle command into the while loop
+
 while IFS= read -r line; do
     if [[ $line =~ \[ERROR\]\ (.*):([0-9]+):([0-9]+):\ (.*)\ \[(.*)\] ]]; then
         filePath=${BASH_REMATCH[1]}
@@ -11,7 +12,7 @@ while IFS= read -r line; do
         errorType=${BASH_REMATCH[5]}
 
         # Convert Windows path to a more generic format
-        displayPath=$(echo $filePath | sed 's|\\|/|g')
+        displayPath=$(cygpath -u "$filePath")
 
         # Markdown formatting
         output+="## File: \`$displayPath\`\n"
